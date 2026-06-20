@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Clone</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Roboto',sans-serif;
+}
+
+body{
+    background:#0f0f0f;
+    color:white;
+}
+
+
+header{
+    height:56px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 16px;
+    background:#0f0f0f;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.menu{
+    font-size:24px;
+    cursor:pointer;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:22px;
+    font-weight:500px;
+    
+}
+
+.logo span:first-child{
+    color:white;
+}
+
+.center{
+    display:flex;
+    align-items:center;
+    width:45%;
+}
+
+.center input{
+    flex:1;
+    height:40px;
+    background:#121212;
+    border:1px solid #303030;
+    border-radius:20px 0 0 20px;
+    color:white;
+    padding:0 15px;
+    font-size:16px;
+}
+
+.center button{
+    width:65px;
+    height:40px;
+    border:none;
+    background:#222;
+    color:white;
+    border-radius:0 20px 20px 0;
+    cursor:pointer;
+}
+
+.right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.create{
+    background:#272727;
+    padding:10px 16px;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.profile{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.container{
+    display:flex;
+}
+
+
+.sidebar{
+    width:240px;
+    height:calc(100vh - 56px);
+    overflow-y:auto;
+    position:sticky;
+    top:56px;
+    padding:12px;
+}
+
+.sidebar::-webkit-scrollbar{
+    width:6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+    background:#333;
+}
+
+.sidebar-section{
+    margin-bottom:15px;
+    border-bottom:1px solid #272727;
+    padding-bottom:10px;
+}
+
+.sidebar-item{
+    padding:12px;
+    border-radius:10px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.sidebar-item:hover{
+    background:#272727;
+}
+
+.active{
+    background:#272727;
+}
+
+.section-title{
+    padding:10px;
+    font-weight:500;
+}
+
+
+.content{
+    flex:1;
+    padding:12px 20px;
+}
+
+
+.chips{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    margin-bottom:20px;
+}
+
+.chips::-webkit-scrollbar{
+    display:none;
+}
+
+.chips button{
+    background:#272727;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    white-space:nowrap;
+}
+
+.chips .selected{
+    background:white;
+    color:black;
+}
+
+.video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(350px,1fr));
+    gap:24px 16px;
+}
+
+.video-card{
+    cursor:pointer;
+}
+
+.thumbnail{
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+.video-card:hover .thumbnail{
+    opacity:0.9;
+}
+
+.video-info{
+    display:flex;
+    gap:12px;
+    margin-top:10px;
+}
+
+.channel{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.details{
+    flex:1;
+}
+
+.details h4{
+    font-size:15px;
+    line-height:1.4;
+    margin-bottom:4px;
+}
+
+.details p{
+    color:#aaaaaa;
+    font-size:14px;
+    line-height:1.4;
+}
+
+
+@media(max-width:900px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .center{
+        width:60%;
+    }
+
+    .video-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+
+    <div class="left">
+        <div class="menu">☰</div>
+
+        <div class="logo">
+            <img src="youtube-logo.png" style="width: 70px;" alt="">
+            <span>YouTube</span>
+        </div>
+    </div>
+
+    <div class="center">
+        <input type="text" placeholder="Search">
+        <button>🔍</button>
+    </div>
+
+    <div class="right">
+        <div class="create">+ Create</div>
+        <div>🔔</div>
+        <img src="profile.png" class="profile">
+    </div>
+
+</header>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-section">
+            <div class="sidebar-item active">🏠 Home</div>
+            <div class="sidebar-item">🎬 Shorts</div>
+            <div class="sidebar-item">📺 Subscriptions</div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="section-title">You</div>
+            <div class="sidebar-item">🕒 History</div>
+            <div class="sidebar-item">📃 Playlists</div>
+            <div class="sidebar-item">⏰ Watch Later</div>
+            <div class="sidebar-item">👍 Liked Videos</div>
+            <div class="sidebar-item">⬇ Downloads</div>
+        </div>
+        <div class="sidebar-section">
+            <div class="section-title">More from YouTube</div>
+        </div>
+
+    </aside>
+
+    <main class="content">
+
+        <div class="chips">
+            <button class="selected">All</button>
+            <button>Music</button>
+            <button>Mixes</button>
+            <button>Tamil Cinema</button>
+            <button>Live</button>
+            <button>Web Development</button>
+            <button>Sports</button>
+            <button>Movies</button>
+            <button>News</button>
+            <button>Gaming</button>
+        </div>
+
+        <div class="video-grid">
+
+            <div class="video-card">
+                <img src="videoframe_5887.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="sun-news-logo.png.png" class="channel">
+                    <div class="details">
+                        <h4>FIFA World Cup 2026 Highlights</h4>
+                        <p>Sun News</p>
+                        <p>1M views • 3 hours ago</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <img src="videoframe_2352.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.Y-jFO0Z6q345tspNh0yB4wHaEK?pid=Api&P=0&h=180" class="channel">
+                    <div class="details">
+                        <h4>House of the Dragon Season Recap</h4>
+                        <p>HBO Max</p>
+                        <p>793K views • 1 day ago</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <img src="videoframe_2780.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.E9Rci5hw79hpQSk-dX3PqgHaHa?pid=Api&P=0&h=180" class="channel">
+                    <div class="details">
+                        <h4>Spider-Man No Way Home Tamil Scene</h4>
+                        <p>Hollywood Tamil</p>
+                        <p>500K views • 4 days ago</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <img src="videoframe_3280.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.oc4vsXhhvSZ-0dSFflMFqQHaEK?pid=Api&P=0&h=180" class="channel">
+                    <div class="details">
+                        <h4>Real Madrid vs Barcelona Highlights</h4>
+                        <p>LALIGA</p>
+                        <p>450K views • 2 weeks ago</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <img src="videoframe_12481.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.XHSAW03HufG0PAjxGjwjWwAAAA?pid=Api&P=0&h=180" class="channel">
+                    <div class="details">
+                        <h4>Onna Irukka Kaththukkanum Promo</h4>
+                        <p>Vijay Television</p>
+                        <p>900K views • 1 hour ago</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <img src="videoframe_3128.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.I2uSjO7y6gcnGjnbxJaJcgAAAA?pid=Api&P=0&h=180" class="channel">
+                    <div class="details">
+                        <h4>Pala Palakkura - Ayan Video Song</h4>
+                        <p>Ayngaran</p>
+                        <p>111K views • 6 days ago</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="video-card">
+                <img src="videoframe_8363.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple112/v4/15/86/18/158618f0-e78f-c1ed-efa8-51fe5c7e86b5/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png" class="channel">
+                    <div class="details">
+                        <h4>Scam 1992 The Harshad Mehta Story | Ep 1 | Sony LIV Originals | Pratik Gandhi, Shreya Dhanwanthary</h4>
+                        <p>SonyLiv</p>
+                        <p>159K views • 2 weeks ago</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="video-card">
+                <img src="videoframe_2813.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.TZO-7Pr_HoUjNus0gdo9bQHaHa?pid=Api&P=0&h=180" class="channel">
+                    <div class="details">
+                        <h4>100 நாள் கடின சவால்🥵 | Stock Market Challenge #stockmarket #a2d #demataccount #challenge</h4>
+                        <p>A2D</p>
+                        <p>879K views • 5 Months ago</p>
+                    </div>
+                    
+                </div>
+            </div>
+                <div class="video-card">
+                <img src="videoframe_3638.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://yt3.googleusercontent.com/R04QrRbPUZuuVoM8Qw4JPw3xXJb-6AaO4L8D_mHIOgY_3ZGdeTXWxASkdJK811RqrxyK_fBWmzw=s900-c-k-c0x00ffffff-no-rj" class="channel">
+                    <div class="details">
+                        <h4>Channa Mereya Full Video - ADHM | Ranbir Kapoor, Anushka | Arijit Singh | Pritam | Karan Johar</h4>
+                        <p>SonyMusicIndiaVEVO</p>
+                        <p>269M views • 8 Years ago</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="video-card">
+                <img src="videoframe_5873.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.0qPIlXLXAUdDPiSx3WWfPwAAAA?pid=Api&P=0&h=180" class="channel">
+                    <div class="details">
+                        <h4>React Full Course for free ⚛️</h4>
+                        <p>BroCode</p>
+                        <p>100K views • 3 Months ago</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="video-card">
+                <img src="videoframe_3584.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="profile.png" class="channel">
+                    <div class="details">
+                        <h4>Pala Palakkura - Ayan Video Song</h4>
+                        <p>Ayngaran</p>
+                        <p>111K views • 6 days ago</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="video-card">
+                <img src="videoframe_3128.png" class="thumbnail">
+                <div class="video-info">
+                    <img src="profile.png" class="channel">
+                    <div class="details">
+                        <h4>Pala Palakkura - Ayan Video Song</h4>
+                        <p>Ayngaran</p>
+                        <p>111K views • 6 days ago</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
